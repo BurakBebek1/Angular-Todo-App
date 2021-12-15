@@ -1,0 +1,55 @@
+<section class="heading-section">
+  <h1 class="title is-1 has-text-centered">Todos</h1>
+</section>
+
+<div class="container add-todo-box-container">
+  <div class="add-todo-box">
+    <form #form="ngForm" (ngSubmit)="onFormSubmit(form)">
+      <h1 class="title is-5">Yeni Todo</h1>
+
+      <div class="field is-grouped" style="margin: 0">
+        <p class="control is-expanded">
+          <input
+            required
+            minlength="2"
+            ngModel
+            #todoTextField="ngModel"
+            name="text"
+            class="input"
+            type="text"
+            placeholder="Todo giriniz..."
+          />
+        </p>
+        <p class="control">
+          <button type="submit" class="button alt-gradient-button">
+            <i class="material-icons">add</i>
+            Ekle
+          </button>
+        </p>
+      </div>
+      <div *ngIf="todoTextField.invalid && showValidationErrors">
+        <p class="help is-danger" *ngIf="todoTextField.errors.required">
+          Lütfen todo giriniz.
+        </p>
+        <p class="help is-danger" *ngIf="todoTextField.errors.minlength">
+          En az 2 harften oluşmalı.
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="todo-list">
+      <app-todo-item
+        *ngFor="let todo of todos"
+        [todo]="todo"
+        (todoClicked)="toogleCompleted(todo)"
+        (editClicked)="editTodo(todo)"
+        (deleteClicked)="deleteTodo(todo)"
+      >
+      </app-todo-item>
+    </div>
+  </div>
+</section>
